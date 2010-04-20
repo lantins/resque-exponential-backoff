@@ -1,0 +1,1 @@
+require 'resque/plugins/exponential_backoff'
