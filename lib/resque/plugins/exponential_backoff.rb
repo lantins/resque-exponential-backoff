@@ -1,5 +1,7 @@
 module Resque
     module Plugins
+        ##
+        # 
         module ExponentialBackoff
             def identifier(*args)
                 args.join('-')
@@ -10,15 +12,15 @@ module Resque
             end
             
             def max_attempts
-                @max_attempts ||= 6
+                @max_attempts ||= 7
             end
             
-            def attempt
-                @attempt ||= 0
+            def attempts
+                @attempts ||= 0
             end
             
             def retry_delay_seconds
-                backoff_strategy[attempt - 1] || backoff_strategy.last
+                backoff_strategy[attempts - 1] || backoff_strategy.last
             end
             
             def backoff_strategy
@@ -28,7 +30,7 @@ module Resque
             
             def before_perform_exponential_backoff(*args)
                 Resque.redis.setnx(key(*args), 0)
-                @attempt = Resque.redis.incr(key(*args))
+                @attempts = Resque.redis.incr(key(*args))
             end
             
             def after_perform_exponential_backoff(*args)
@@ -36,7 +38,7 @@ module Resque
             end
             
             def on_failure_exponential_backoff(exception, *args)
-                if attempt >= max_attempts
+                if attempts >= max_attempts
                     Resque.redis.del(key(*args))
                     return
                 end

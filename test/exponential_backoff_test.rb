@@ -32,7 +32,7 @@ module CustomBackoffJob
     @queue = :testing
     
     def self.retry_delay_seconds
-        attempt * 42
+        attempts * 42
     end
     
     def self.perform(*args)
