@@ -6,8 +6,6 @@ A [Resque][rq] plugin. Requires Resque 1.8.0 & [resque-scheduler][rqs].
 resque-exponential-backoff is a plugin to add retry/exponential backoff to
 your resque jobs.
 
-----------
-
 Usage
 -----
 Simply extend your module/class with this module:
@@ -34,8 +32,6 @@ If `attempts < max_attempts` the job will be requeued. The delay between retry
 attempts is determine using the backoff strategy.
 
 *Exceptions are always passed the failure backends.*
-
-----------
 
 Customise & Extend
 ------------------
@@ -102,8 +98,7 @@ Overload the `#retry_delay_seconds` method and do your own thing.
             (attempts * 60) ** 2
         end
     end
-    
-----------
+
 
 Install
 -------
@@ -111,7 +106,6 @@ Install
     # Once I figure out how to push to rubygems.org...
     gem install resque-exponential-backoff
 
-----------
 
 License
 -------
