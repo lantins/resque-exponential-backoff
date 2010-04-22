@@ -103,7 +103,6 @@ Override `#retry_delay_seconds` to implement your own delay handling.
 Install
 -------
 
-    # Once I figure out how to push to rubygems.org...
     gem install resque-exponential-backoff
 
 
