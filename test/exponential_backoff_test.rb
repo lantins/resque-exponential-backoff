@@ -27,15 +27,16 @@ module CustomBackoffStrategyJob
     end
 end
 
-module CustomBackoffJob
+module DeliverWebHook
     extend Resque::Plugins::ExponentialBackoff
     @queue = :testing
     
     def self.retry_delay_seconds
-        attempts * 42
+        attempts * 10
     end
     
-    def self.perform(*args)
+    def self.perform(url, hook_id, hmac_key)
+        
         raise
     end
 end
@@ -74,6 +75,7 @@ class ExponentialBackoffTest < Test::Unit::TestCase
         assert_equal 2, Resque.info[:processed]
         assert_equal 2, Resque.info[:failed]
         assert_equal 1, Resque.delayed_queue_schedule_size
+        # FIXME: below test can be a bit brittle when off by a second.
         assert_equal Time.now.to_i + 60, Resque.delayed_queue_peek(0, 1).first
     end
     
@@ -91,15 +93,15 @@ class ExponentialBackoffTest < Test::Unit::TestCase
     end
     
     def test_custom_backoff_job
-        Resque.enqueue(CustomBackoffJob)
-        Resque.enqueue(CustomBackoffJob)
+        Resque.enqueue(DeliverWebHook, 'http://lividpenguin.com', 1305, 'cd8079192d379dc612f17c660591a6cfb05f1dda')
+        Resque.enqueue(DeliverWebHook, 'http://lividpenguin.com', 1305, 'cd8079192d379dc612f17c660591a6cfb05f1dda')
         @worker.work(0)
         
         assert_equal 2, Resque.info[:processed]
         assert_equal 2, Resque.info[:failed]
         
         delayed = Resque.delayed_queue_peek(0, 2)
-        assert_equal Time.now.to_i + 42, delayed.first
-        assert_equal Time.now.to_i + 84, delayed.last
+        assert_equal Time.now.to_i + 10, delayed.first
+        assert_equal Time.now.to_i + 20, delayed.last
     end
 end

@@ -51,8 +51,8 @@ If you just extend with this module and nothing else, these are the defaults:
 **n.b.** The job attempts count is incremented/stored in a redis key, the key
 is built using the name of your jobs class/module and its arguments.
 
-If you have lots of arguments, really long ones, you may should consider
-overloading the `#identifier` method in your model:
+If you have lots of arguments, really long ones, you should consider overriding
+`#identifier` to implement a more suitable custom identifier.
 
     def self.identifier(database_id, massive_url_list, meow_purr)
         "#{database_id}"
@@ -60,8 +60,8 @@ overloading the `#identifier` method in your model:
 
 For the examples in this readme, the default key looks like this:
 
-    # exponential-backoff:<name>:<args>
-     'exponential-backoff:DeliverWebHook:http://lividpenguin.com-1305-cd8079192'
+    exponential-backoff:<name>:<args>
+    exponential-backoff:DeliverWebHook:http://lividpenguin.com-1305-cd8079192'
 
 
 ### Custom max attempts, backoff strategy
@@ -84,7 +84,7 @@ For the examples in this readme, the default key looks like this:
 
 ### Custom delay handling
 
-Overload the `#retry_delay_seconds` method and do your own thing.
+Override `#retry_delay_seconds` to implement your own delay handling.
 
     class DeliverWebHook
         extend Resque::Plugins::ExponentialBackoff
