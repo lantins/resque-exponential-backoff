@@ -8,7 +8,8 @@ spec = Gem::Specification.new do |s|
     s.email             = 'luke@lividpenguin.com'
     s.has_rdoc          = false
     
-    s.files             = %w(LICENSE Rakefile README.md) + Dir.glob('{test,lib/**/*}')
+    s.files             = %w(LICENSE Rakefile README.md)
+    s.files            += Dir.glob('{test/*,lib/**/*}')
     s.require_paths     = ['lib']
     
     s.add_dependency('resque', '~> 1.8.0')
