@@ -1,6 +1,6 @@
 spec = Gem::Specification.new do |s|
     s.name              = 'resque-exponential-backoff'
-    s.version           = '0.1.0'
+    s.version           = '0.1.1'
     s.date              = Time.now.strftime('%Y-%m-%d')
     s.summary           = 'A resque plugin, add retry/exponential backoff to your resque jobs.'
     s.homepage          = 'http://github.com/lantins/resque-exponential-backoff'
@@ -15,8 +15,9 @@ spec = Gem::Specification.new do |s|
     s.add_dependency('resque-scheduler', '~> 1.8.0')
     s.add_dependency('hashie', '~> 0.2.0')
     s.add_development_dependency('turn')
+    s.add_development_dependency('yard')
     
-    s..description       = <<EOL
+    s.description       = <<EOL
 A resque plugin that adds retry/exponential backoff functionality to your
 resque jobs.
 
