@@ -14,7 +14,6 @@ spec = Gem::Specification.new do |s|
     
     s.add_dependency('resque', '~> 1.8.0')
     s.add_dependency('resque-scheduler', '~> 1.8.0')
-    s.add_dependency('hashie', '~> 0.2.0')
     s.add_development_dependency('turn')
     s.add_development_dependency('yard')
     
